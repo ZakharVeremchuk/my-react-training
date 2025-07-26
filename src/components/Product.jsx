@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 
+const headerStyle = {
+  color: 'blue',
+}
+
 const Product = (
   {
    name, 
@@ -9,7 +13,7 @@ const Product = (
 ) => {
   return (
     <div>
-      <h2>{name}</h2>
+      <h2 style={headerStyle}>{name}</h2>
       <img src={imgUrl} alt={name} width="480" />
 	    <p>Price: {price} credits</p>
     </div>
