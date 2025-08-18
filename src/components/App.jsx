@@ -9,6 +9,10 @@ import { Alert3 } from './Alert3'
 import { HiUser } from "react-icons/hi";
 import  ClickSaveHook  from './ClickSaveHook' 
 import { useState } from 'react';
+import LoginForm from './LoginForm';
+import SearchBar from './SearchBar';
+import LangSwitcher from './LangSwitcher';
+import LoginForm2 from './LoginForm2';
 
 const favBooks = [
     {id: "id-1", name: "JS for beginners"},
@@ -19,6 +23,7 @@ const favBooks = [
 export default function App() {
   const [clicks, setClicks] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [coffeeSize, setCoffeeSize] = useState("sm");
 
 
   const [values, setValues] = useState({
@@ -64,6 +69,24 @@ export default function App() {
         <button onClick={() => alert(message)}>{children}</button>
     )
   }
+
+  const handleLogin = (userData) => {
+    console.log(userData)
+  }
+
+  const [lang, setLang] = useState("uk");
+
+  const handleSizeChange = (evt) => {
+    setCoffeeSize(evt.target.value);
+  }
+
+
+  const [hasAccepted, setHasAccepted] = useState(false);
+
+  const handleChange = (evt) => {
+    setHasAccepted(evt.target.checked);
+  }
+
 
   return (
     <>
@@ -137,8 +160,70 @@ export default function App() {
 
       <div>
         <ClickSaveHook/>
-        <Experement/>
       </div>
+
+      <div>
+        <h1>Please login to your account!</h1>
+        <LoginForm onLogin={handleLogin}/>
+      </div>
+
+      <SearchBar/>
+
+      <p>Selected language: {lang}</p>
+      <LangSwitcher value={lang} onSelect={setLang}/>
+
+      <br/>
+
+      <h1>Select coffee size</h1>
+      <label>
+        <input 
+          type="radio" 
+          name="coffeeSize" 
+          value="sm"
+          checked={coffeeSize === "sm"}
+          onChange={handleSizeChange}
+          />
+        Small
+      </label>
+      <label>
+        <input 
+          type="radio" 
+          name="coffeeSize" 
+          value="md"
+          checked={coffeeSize === "md"}
+          onChange={handleSizeChange}
+          />
+        Medium
+      </label>
+      <label>
+        <input 
+          type="radio" 
+          name="coffeeSize" 
+          value="lg"
+          checked={coffeeSize === "lg"}
+          onChange={handleSizeChange}
+          />
+        Large
+      </label>
+
+      <br/>
+
+      <div>
+        <label>
+          <input 
+            type="checkbox" 
+            name="terms"
+            checked={hasAccepted}
+            onChange={handleChange}
+            />
+          I accept terms and conditions
+        </label>
+        <button type="button" disabled={!hasAccepted}>Proceed</button>
+      </div>
+
+      <br/>
+
+      <LoginForm2/>
     </>
   );
 }
